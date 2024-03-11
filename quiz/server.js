@@ -51,6 +51,19 @@ app.post('/write/adduser', (req, res) => {
   res.send('done');
 })
 
+app.get('/read/username/:name', (req, res) => {
+  let name = req.params.name;
+  let searchResults = users.filter(function(user) {
+    return user.username === name;
+  });
+
+  if (searchResults.length > 0) {
+    res.send(searchResults);
+  } else {
+    res.send({error: {message: `${name} not found`, status: 404}});
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
